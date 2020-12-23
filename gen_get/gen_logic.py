@@ -28,7 +28,7 @@ for location in item_locations:
   for key, value in item_locations[location].items():
     if(key in forbidden_keys):
       continue
-    if(key=="Need" OR key=="Gltiches"):
+    if(key=="Need" or key=="Gltiches"):
       splitStr = value.split('"')
       result = "'".join(splitStr)
       splitStr = result.split('&')
