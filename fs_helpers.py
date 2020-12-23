@@ -1,4 +1,3 @@
-
 import struct
 from io import BytesIO
 
@@ -43,7 +42,7 @@ def write_and_pack_bytes(data, offset, new_values, format_string):
 def read_str(data, offset, length):
   data_length = data.seek(0, 2)
   if offset+length > data_length:
-    raise InvalidOffsetError("Offset 0x%X, length 0x%X is past the end of the data (length 0x%X)." % (offset, length, data_length))
+    raise InvalidOffsetError(f"Offset 0x{offset:X}, length 0x{length:X} is past the end of the data (length 0x{data_length:X}).")
   data.seek(offset)
   string = data.read(length).decode("shift_jis")
   string = string.rstrip("\0") # Remove trailing null bytes
@@ -60,7 +59,7 @@ def try_read_str(data, offset, length):
 def read_str_until_null_character(data, offset):
   data_length = data.seek(0, 2)
   if offset > data_length:
-    raise InvalidOffsetError("Offset 0x%X is past the end of the data (length 0x%X)." % (offset, data_length))
+    raise InvalidOffsetError(f"Offset 0x{offset:X} is past the end of the data (length 0x{data_length:X}).")
 
   temp_offset = offset
   str_length = 0
@@ -84,7 +83,7 @@ def write_str(data, offset, new_string, max_length):
 
   str_len = len(new_string)
   if str_len >= max_length:
-    raise Exception("String \"%s\" is too long (max length including null byte: 0x%X)" % (new_string, max_length))
+    raise Exception(f"String \"{new_string}\" is too long (max length including null byte: 0x{max_length:X})")
 
   padding_length = max_length - str_len
   null_padding = b"\x00"*padding_length
@@ -99,7 +98,7 @@ def write_magic_str(data, offset, new_string, max_length):
 
   str_len = len(new_string)
   if str_len > max_length:
-    raise Exception("String %s is too long (max length 0x%X)" % (new_string, max_length))
+    raise Exception(f"String {new_string} is too long (max length 0x{max_length:X})")
 
   padding_length = max_length - str_len
   null_padding = b"\x00"*padding_length

@@ -1,4 +1,3 @@
-
 import os
 import copy
 import re
@@ -312,7 +311,7 @@ def randomize_enemy_group(self, stage_folder, enemy_group, enemy_pool_for_stage)
         if is_enemy_allowed_in_placement_category(data, enemy_location["Placement category"]):
           if data["Actor name"] not in enemy_actor_names_of_correct_category:
             enemy_actor_names_of_correct_category.append(data["Actor name"])
-      error_msg += "Enemies of the correct category (%s): %s" % (enemy_location["Placement category"], ", ".join(enemy_actor_names_of_correct_category))
+      error_msg += "Enemies of the correct category ({}): {}".format(enemy_location["Placement category"], ", ".join(enemy_actor_names_of_correct_category))
       raise Exception(error_msg)
     
     new_enemy_data = self.rng.choice(enemies_to_randomize_to_for_this_location)
@@ -353,7 +352,7 @@ def save_changed_enemies_and_randomize_their_params(self):
       if group_path != last_printed_group_path:
         print()
       last_printed_group_path = group_path
-      print("Putting a %s (param:%08X) in %s" % (new_enemy_data["Actor name"], new_enemy_data["Params"], path))
+      print("Putting a {} (param:{:08X}) in {}".format(new_enemy_data["Actor name"], new_enemy_data["Params"], path))
     
     death_switch_to_set = None
     if ":" in placement_category:
@@ -560,12 +559,12 @@ def print_all_enemy_params(self):
     if data["Actor name"] not in all_enemy_actor_names:
       all_enemy_actor_names.append(data["Actor name"])
   
-  print("% 7s  % 8s  % 4s  % 4s  %s" % ("name", "params", "aux1", "aux2", "path"))
+  print("{: 7}  {: 8}  {: 4}  {: 4}  {}".format("name", "params", "aux1", "aux2", "path"))
   for dzx, arc_path in stage_searcher.each_stage_and_room(self):
     actors = dzx.entries_by_type("ACTR")
     enemies = [actor for actor in actors if actor.name in all_enemy_actor_names]
     for enemy in enemies:
-      print("% 7s  %08X  %04X  %04X  %s" % (enemy.name, enemy.params, enemy.aux_params_1, enemy.aux_params_2, arc_path))
+      print(f"{enemy.name: 7}  {enemy.params:08X}  {enemy.aux_params_1:04X}  {enemy.aux_params_2:04X}  {arc_path}")
 
 def print_all_enemy_locations(self):
   # Autogenerates an enemy_locations.txt file.
@@ -734,7 +733,7 @@ def get_enemy_data_for_actor(self, enemy):
     elif enemy.mothula_type in [0, 2]:
       return enemy_datas_by_pretty_name["Winged Mothula"]
   
-  raise Exception("Unknown enemy subspecies: actor name \"%s\", params %08X, aux params %04X, aux params 2 %04X" % (enemy.name, enemy.params, enemy.aux_params_1, enemy.aux_params_2))
+  raise Exception(f"Unknown enemy subspecies: actor name \"{enemy.name}\", params {enemy.params:08X}, aux params {enemy.aux_params_1:04X}, aux params 2 {enemy.aux_params_2:04X}")
 
 def get_placement_category_for_vanilla_enemy_location(self, enemy_data, enemy):
   if len(enemy_data["Placement categories"]) == 1:
@@ -779,7 +778,7 @@ def get_placement_category_for_vanilla_enemy_location(self, enemy_data, enemy):
     else:
       return "Ground"
   
-  raise Exception("Unknown placement category for enemy: actor name \"%s\", params %08X, aux params %04X, aux params 2 %04X" % (enemy.name, enemy.params, enemy.aux_params_1, enemy.aux_params_2))
+  raise Exception(f"Unknown placement category for enemy: actor name \"{enemy.name}\", params {enemy.params:08X}, aux params {enemy.aux_params_1:04X}, aux params 2 {enemy.aux_params_2:04X}")
 
 def is_enemy_allowed_in_placement_category(enemy_data, category):
   enemy_categories = enemy_data["Compiled categories"]
@@ -991,7 +990,7 @@ def get_enemy_instance_by_path(self, path):
   enemy = dzx.entries_by_type_and_layer("ACTR", layer)[actor_index]
   
   if enemy.name not in self.all_enemy_actor_names:
-    raise Exception("Enemy location path %s points to a %s actor, not an enemy!" % (path, enemy.name))
+    raise Exception(f"Enemy location path {path} points to a {enemy.name} actor, not an enemy!")
   
   return (enemy, arc_name, dzx, layer)
 
@@ -1109,7 +1108,7 @@ class EnemyCategory:
     return False
   
   def __str__(self):
-    return "EnemyCategory(%s, DeathSwitch: %s)" % (self.category_string, self.can_set_switch)
+    return f"EnemyCategory({self.category_string}, DeathSwitch: {self.can_set_switch})"
   
   def __repr__(self):
     return self.__str__()

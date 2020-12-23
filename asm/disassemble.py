@@ -1,4 +1,3 @@
-
 from subprocess import call
 from subprocess import DEVNULL
 import tempfile
@@ -139,14 +138,14 @@ def add_relocations_and_symbols_to_rel(asm_path, rel_path, file_path_in_gcm, mai
       if module_num == 0:
         #print("symbol address: %X  %s" % (relocation_data_entry.symbol_address, main_symbols.get(relocation_data_entry.symbol_address, "")))
         symbol_name = main_symbols.get(relocation_data_entry.symbol_address, "")
-        replacements[rounded_down_location] = "%X  %s" % (relocation_data_entry.symbol_address, symbol_name)
+        replacements[rounded_down_location] = f"{relocation_data_entry.symbol_address:X}  {symbol_name}"
       else:
         if module_num == rel.id:
           section_to_relocate_against = rel.sections[relocation_data_entry.section_num_to_relocate_against]
           section_offset_to_relocate_against = section_to_relocate_against.offset
           #print("address: %04X (%X + %X)" % (section_offset_to_relocate_against + relocation_data_entry.symbol_address, section_offset_to_relocate_against, relocation_data_entry.symbol_address))
           #print("section #%X; section offset %X" % (relocation_data_entry.section_num_to_relocate_against, section_offset_to_relocate_against))
-          replacements[rounded_down_location] = "%X (%X + %X)" % (
+          replacements[rounded_down_location] = "{:X} ({:X} + {:X})".format(
             section_offset_to_relocate_against + relocation_data_entry.symbol_address,
             section_offset_to_relocate_against,
             relocation_data_entry.symbol_address,
@@ -164,7 +163,7 @@ def add_relocations_and_symbols_to_rel(asm_path, rel_path, file_path_in_gcm, mai
 
           relocated_offset = section_offset_to_relocate_against + relocation_data_entry.symbol_address
           symbol_name = other_rel_symbol_names.get(relocated_offset, "")
-          replacements[rounded_down_location] = "%s:      %X (%X + %X)      %s" % (
+          replacements[rounded_down_location] = "{}:      {:X} ({:X} + {:X})      {}".format(
             other_rel_name,
             relocated_offset,
             section_offset_to_relocate_against,
@@ -185,7 +184,7 @@ def add_relocations_and_symbols_to_rel(asm_path, rel_path, file_path_in_gcm, mai
       for offset in range(word_offset, word_offset+4):
         if offset in rel_symbol_names:
           symbol_name = rel_symbol_names[offset]
-          out_str += "; SYMBOL: %X    %s" % (offset, symbol_name)
+          out_str += f"; SYMBOL: {offset:X}    {symbol_name}"
           if rel.bss_section_index and offset >= rel.bss_offset:
             out_str += "    [BSS symbol, value initialized at runtime]"
           out_str += "\n"
@@ -277,11 +276,11 @@ def add_symbols_to_main(self, asm_path, main_symbols):
         if address is not None:
           if address in main_symbols:
             symbol_name = main_symbols[address]
-            out_str += "; SYMBOL: %08X    %s\n" % (address, symbol_name)
+            out_str += f"; SYMBOL: {address:08X}    {symbol_name}\n"
 
           # Convert the displayed main.dol offset to an address in RAM.
           line_after_offset = match.group(2)
-          line = "%08X%s" % (address, line_after_offset)
+          line = f"{address:08X}{line_after_offset}"
 
         if not check_offset_in_executable_dol_section(self, offset):
           # Remove the disassembled code for non-executable sections since it will be nonsense, not actually code.
@@ -297,23 +296,23 @@ def add_symbols_to_main(self, asm_path, main_symbols):
             if word_value in main_symbols:
               symbol_name = main_symbols[word_value]
               line += get_padded_comment_string_for_line(line)
-              line += "%X  %s" % (word_value, symbol_name)
+              line += f"{word_value:X}  {symbol_name}"
 
       branch_match = re.search(r"^(.+ \t(?:bl|b|beq|bne|blt|bgt|ble|bge|bdnz|bdz)\s+0x)([0-9a-f]+)$", line, re.IGNORECASE)
       addi_match = re.search(r"^.+ \t(?:addi)\s+r\d+,(r\d+),(-?\d+)$", line, re.IGNORECASE)
-      load_or_store_match = re.search(r"^.+ \t(?:" + "|".join(ALL_LOAD_OR_STORE_OPCODES) + ")\s+[rf]\d+,(-?\d+)\((r\d+)\)$", line, re.IGNORECASE)
+      load_or_store_match = re.search(r"^.+ \t(?:" + "|".join(ALL_LOAD_OR_STORE_OPCODES) + r")\s+[rf]\d+,(-?\d+)\((r\d+)\)$", line, re.IGNORECASE)
       if branch_match:
         line_before_offset = branch_match.group(1)
         offset = int(branch_match.group(2), 16)
         address = self.dol.convert_offset_to_address(offset)
         if address is not None:
-          line = "%s%08X" % (line_before_offset, address)
+          line = f"{line_before_offset}{address:08X}"
           out_str += line
           if address in main_symbols:
             symbol_name = main_symbols[address]
             #print(symbol_name)
             out_str += get_padded_comment_string_for_line(line)
-            out_str += "%08X    %s" % (address, symbol_name)
+            out_str += f"{address:08X}    {symbol_name}"
         else:
           out_str += line
       elif addi_match or load_or_store_match:
@@ -548,9 +547,9 @@ def get_extra_comment_for_asm_line(line):
 
     if rlwimi_match:
       if l_shift == 0:
-        comment += "%s |= %s & 0x%08X" % (dst_reg, src_reg, mask)
+        comment += f"{dst_reg} |= {src_reg} & 0x{mask:08X}"
       else:
-        comment += "%s |= (%s << 0x%02X) & 0x%08X" % (dst_reg, src_reg, l_shift, mask)
+        comment += f"{dst_reg} |= ({src_reg} << 0x{l_shift:02X}) & 0x{mask:08X}"
     else:
       # Undo the shifting operation on the mask so we can present the mask as if it was ANDed pre-shift (it's actually post-shift).
       adjusted_mask = (mask >> l_shift) | (mask << (32 - l_shift))
@@ -561,11 +560,11 @@ def get_extra_comment_for_asm_line(line):
         l_shift = -(32 - l_shift)
 
       if l_shift == 0:
-        comment += "%s = %s & 0x%08X" % (dst_reg, src_reg, adjusted_mask)
+        comment += f"{dst_reg} = {src_reg} & 0x{adjusted_mask:08X}"
       elif l_shift < 0:
-        comment += "%s = (%s & 0x%08X) >> 0x%02X" % (dst_reg, src_reg, adjusted_mask, -l_shift)
+        comment += "{} = ({} & 0x{:08X}) >> 0x{:02X}".format(dst_reg, src_reg, adjusted_mask, -l_shift)
       else:
-        comment += "%s = (%s & 0x%08X) << 0x%02X" % (dst_reg, src_reg, adjusted_mask, l_shift)
+        comment += f"{dst_reg} = ({src_reg} & 0x{adjusted_mask:08X}) << 0x{l_shift:02X}"
 
   if comment:
     comment = get_padded_comment_string_for_line(line) + comment

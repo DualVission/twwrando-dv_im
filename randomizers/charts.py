@@ -1,4 +1,3 @@
-
 import copy
 
 def randomize_charts(self):

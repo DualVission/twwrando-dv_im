@@ -1,4 +1,3 @@
-
 BGM_INDEX_TO_NAME = {
   0x0000: "defaultse.bms", # Silence
   0x0001: "i_link.bms", # Outset

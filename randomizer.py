@@ -1,4 +1,3 @@
-
 import os
 from io import BytesIO
 import shutil
@@ -38,7 +37,7 @@ from randomizers import music
 from randomizers import enemies
 from randomizers import palettes
 
-with open(os.path.join(RANDO_ROOT_PATH, "version.txt"), "r") as f:
+with open(os.path.join(RANDO_ROOT_PATH, "version.txt")) as f:
   VERSION = f.read().strip()
 
 VERSION_WITHOUT_COMMIT = VERSION
@@ -49,14 +48,14 @@ if IS_RUNNING_FROM_SOURCE:
 
   git_commit_head_file = os.path.join(RANDO_ROOT_PATH, ".git", "HEAD")
   if os.path.isfile(git_commit_head_file):
-    with open(git_commit_head_file, "r") as f:
+    with open(git_commit_head_file) as f:
       head_file_contents = f.read().strip()
     if head_file_contents.startswith("ref: "):
       # Normal head, HEAD file has a reference to a branch which contains the commit hash
       relative_path_to_hash_file = head_file_contents[len("ref: "):]
       path_to_hash_file = os.path.join(RANDO_ROOT_PATH, ".git", relative_path_to_hash_file)
       if os.path.isfile(path_to_hash_file):
-        with open(path_to_hash_file, "r") as f:
+        with open(path_to_hash_file) as f:
           hash_file_contents = f.read()
         version_suffix = "_" + hash_file_contents[:7]
     elif re.search(r"^[0-9a-f]{40}$", head_file_contents):
@@ -554,13 +553,13 @@ class Randomizer:
 
     integer_md5 = int(md5.hexdigest(), 16)
     if integer_md5 != CLEAN_WIND_WAKER_ISO_MD5:
-      raise InvalidCleanISOError("Invalid clean Wind Waker ISO. Your ISO may be corrupted.\n\nCorrect ISO MD5 hash: %x\nYour ISO's MD5 hash: %x" % (CLEAN_WIND_WAKER_ISO_MD5, integer_md5))
+      raise InvalidCleanISOError(f"Invalid clean Wind Waker ISO. Your ISO may be corrupted.\n\nCorrect ISO MD5 hash: {CLEAN_WIND_WAKER_ISO_MD5:x}\nYour ISO's MD5 hash: {integer_md5:x}")
 
   def read_text_file_lists(self):
     # Get item names.
     self.item_names = {}
     self.item_name_to_id = {}
-    with open(os.path.join(DATA_PATH, "item_names.txt"), "r") as f:
+    with open(os.path.join(DATA_PATH, "item_names.txt")) as f:
       matches = re.findall(r"^([0-9a-f]{2}) - (.+)$", f.read(), re.IGNORECASE | re.MULTILINE)
     for item_id, item_name in matches:
       if item_name:
@@ -572,7 +571,7 @@ class Randomizer:
 
     # Get stage and island names for debug purposes.
     self.stage_names = {}
-    with open(os.path.join(DATA_PATH, "stage_names.txt"), "r") as f:
+    with open(os.path.join(DATA_PATH, "stage_names.txt")) as f:
       while True:
         stage_folder = f.readline()
         if not stage_folder:
@@ -582,7 +581,7 @@ class Randomizer:
     self.island_names = {}
     self.island_number_to_name = {}
     self.island_name_to_number = {}
-    with open(os.path.join(DATA_PATH, "island_names.txt"), "r") as f:
+    with open(os.path.join(DATA_PATH, "island_names.txt")) as f:
       while True:
         room_arc_name = f.readline()
         if not room_arc_name:
@@ -594,7 +593,7 @@ class Randomizer:
         self.island_name_to_number[island_name] = island_number
 
     self.item_ids_without_a_field_model = []
-    with open(os.path.join(DATA_PATH, "items_without_field_models.txt"), "r") as f:
+    with open(os.path.join(DATA_PATH, "items_without_field_models.txt")) as f:
       matches = re.findall(r"^([0-9a-f]{2}) ", f.read(), re.IGNORECASE | re.MULTILINE)
     for item_id in matches:
       if item_name:
@@ -602,7 +601,7 @@ class Randomizer:
         self.item_ids_without_a_field_model.append(item_id)
 
     self.arc_name_pointers = {}
-    with open(os.path.join(DATA_PATH, "item_resource_arc_name_pointers.txt"), "r") as f:
+    with open(os.path.join(DATA_PATH, "item_resource_arc_name_pointers.txt")) as f:
       matches = re.findall(r"^([0-9a-f]{2}) ([0-9a-f]{8}) ", f.read(), re.IGNORECASE | re.MULTILINE)
     for item_id, arc_name_pointer in matches:
       item_id = int(item_id, 16)
@@ -610,30 +609,30 @@ class Randomizer:
       self.arc_name_pointers[item_id] = arc_name_pointer
 
     self.icon_name_pointer = {}
-    with open(os.path.join(DATA_PATH, "item_resource_icon_name_pointers.txt"), "r") as f:
+    with open(os.path.join(DATA_PATH, "item_resource_icon_name_pointers.txt")) as f:
       matches = re.findall(r"^([0-9a-f]{2}) ([0-9a-f]{8}) ", f.read(), re.IGNORECASE | re.MULTILINE)
     for item_id, icon_name_pointer in matches:
       item_id = int(item_id, 16)
       icon_name_pointer = int(icon_name_pointer, 16)
       self.icon_name_pointer[item_id] = icon_name_pointer
 
-    with open(os.path.join(ASM_PATH, "custom_symbols.txt"), "r") as f:
+    with open(os.path.join(ASM_PATH, "custom_symbols.txt")) as f:
       self.custom_symbols = yaml.safe_load(f)
     self.main_custom_symbols = self.custom_symbols["sys/main.dol"]
 
-    with open(os.path.join(ASM_PATH, "free_space_start_offsets.txt"), "r") as f:
+    with open(os.path.join(ASM_PATH, "free_space_start_offsets.txt")) as f:
       self.free_space_start_offsets = yaml.safe_load(f)
 
-    with open(os.path.join(DATA_PATH, "progress_item_hints.txt"), "r") as f:
+    with open(os.path.join(DATA_PATH, "progress_item_hints.txt")) as f:
       self.progress_item_hints = yaml.safe_load(f)
 
-    with open(os.path.join(DATA_PATH, "island_name_hints.txt"), "r") as f:
+    with open(os.path.join(DATA_PATH, "island_name_hints.txt")) as f:
       self.island_name_hints = yaml.safe_load(f)
 
-    with open(os.path.join(DATA_PATH, "enemy_types.txt"), "r") as f:
+    with open(os.path.join(DATA_PATH, "enemy_types.txt")) as f:
       self.enemy_types = yaml.safe_load(f)
 
-    with open(os.path.join(DATA_PATH, "palette_randomizable_files.txt"), "r") as f:
+    with open(os.path.join(DATA_PATH, "palette_randomizable_files.txt")) as f:
       self.palette_randomizable_files = yaml.safe_load(f)
 
   def get_arc(self, arc_path):
@@ -757,7 +756,7 @@ class Randomizer:
     new_actor_id = read_u16(section_data_actor_profile, offset_of_actor_profile+8)
 
     if new_actor_id in self.used_actor_ids:
-      raise Exception("Cannot add a new REL with an actor ID that is already used:\nActor ID: %03X\nNew REL path: %s" % (new_actor_id, rel_path))
+      raise Exception(f"Cannot add a new REL with an actor ID that is already used:\nActor ID: {new_actor_id:03X}\nNew REL path: {rel_path}")
 
     # We need to add the new REL to the profile list.
     profile_list = self.get_rel("files/rels/f_pc_profile_lst.rel")
@@ -778,7 +777,7 @@ class Randomizer:
     rel_relocation.symbol_address = offset_of_actor_profile
 
     if new_rel.id in profile_list.relocation_entries_for_module:
-      raise Exception("Cannot add a new REL with a unique ID that is already present in the profile list:\nREL ID: %03X\nNew REL path: %s" % (new_rel.id, rel_path))
+      raise Exception(f"Cannot add a new REL with a unique ID that is already present in the profile list:\nREL ID: {new_rel.id:03X}\nNew REL path: {rel_path}")
 
     profile_list.relocation_entries_for_module[new_rel.id] = [rel_relocation]
 
@@ -954,7 +953,7 @@ class Randomizer:
             continue
         else:
           value = self.options[option_name]
-        option_strings.append("%s: %s" % (option_name, value))
+        option_strings.append(f"{option_name}: {value}")
     header += ", ".join(option_strings)
     header += "\n\n\n"
 
@@ -1078,7 +1077,7 @@ class Randomizer:
     # Write dungeon/secret cave entrances.
     spoiler_log += "Entrances:\n"
     for entrance_name, dungeon_or_cave_name in self.entrance_connections.items():
-      spoiler_log += "  %-48s %s\n" % (entrance_name+":", dungeon_or_cave_name)
+      spoiler_log += "  {:<48} {}\n".format(entrance_name+":", dungeon_or_cave_name)
 
     spoiler_log += "\n\n\n"
 
@@ -1095,7 +1094,7 @@ class Randomizer:
         chart_name = "Treasure Chart %d" % (chart_number-8)
       island_number = chart_name_to_island_number[chart_name]
       island_name = self.island_number_to_name[island_number]
-      spoiler_log += "  %-18s %s\n" % (chart_name+":", island_name)
+      spoiler_log += "  {:<18} {}\n".format(chart_name+":", island_name)
 
     spoiler_log_output_path = os.path.join(self.randomized_output_folder, "WW Random %s - Spoiler Log.txt" % self.seed)
     with open(spoiler_log_output_path, "w") as f:

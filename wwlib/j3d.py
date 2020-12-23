@@ -1,4 +1,3 @@
-
 import os
 from enum import Enum
 from io import BytesIO
@@ -83,7 +82,7 @@ class J3DFileEntry(J3DFile):
   def __init__(self, file_entry):
     self.file_entry = file_entry
     self.file_entry.decompress_data_if_necessary()
-    super(J3DFileEntry, self).__init__(self.file_entry.data)
+    super().__init__(self.file_entry.data)
 
 class BDL(J3DFileEntry):
   def __init__(self, file_entry):

@@ -1,4 +1,3 @@
-
 class PackedBitsWriter:
   def __init__(self):
     self.bits_left_in_byte = 8

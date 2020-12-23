@@ -18,7 +18,7 @@ with open(os.path.join(path_input, source_file)) as f:
 final_locations = ''
 change=0
 for location in item_locations:
-  add_text = ' Name="{}"'.format(location)
+  add_text = f' Name="{location}"'
   change+=1
   try:
     mode = item_locations[location]["Mode"]
@@ -37,7 +37,7 @@ for location in item_locations:
       result = "OR".join(splitStr)
       value = result
     add_text = add_text+(' {}="{}"').format(key,value)
-  final_locations+='  <check{}/>\n'.format(add_text)
+  final_locations+=f'  <check{add_text}/>\n'
 checksum = (((len(file_details[0]))**((change%2)*((len(file_details[2]))%6+1)))%(len(file_details[1])))
 format_title = format_title.format(file_details[0],file_details[1],file_details[2],change,file_details[3],checksum)
 doc_cont = format_title+final_locations+"</inject>"

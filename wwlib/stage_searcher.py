@@ -1,4 +1,3 @@
-
 import os
 import re
 from collections import OrderedDict
@@ -160,7 +159,7 @@ def print_all_used_item_pickup_flags(self):
         f.write("Stage ID: %02X\n" % stage_id)
         item_flags.sort(key=lambda tuple: tuple[0])
         for item_flag, item_name, location_identifier in item_flags:
-          f.write("  %02X for  % -21s %s\n" % (item_flag, item_name, location_identifier))
+          f.write(f"  {item_flag:02X} for  {item_name: <21} {location_identifier}\n")
 
   write_used_item_flags_to_file(used_item_flags_by_stage_id, "Used item pickup flags by stage ID.txt")
   write_used_item_flags_to_file(used_item_flags_by_stage_id_unused, "Used item pickup flags by stage ID (unused stages).txt")
@@ -198,7 +197,7 @@ def print_all_used_chest_open_flags(self):
     chest_flags.sort(key=lambda tuple: tuple[0])
     for chest_flag, item_name, arc_path in chest_flags:
       arc_path_short = arc_path[len("files/res/Stage/"):-len(".arc")]
-      print("  %02X (Item: %s) in %s" % (chest_flag, item_name, arc_path_short))
+      print(f"  {chest_flag:02X} (Item: {item_name}) in {arc_path_short}")
 
 def print_all_event_flags_used_by_stb_cutscenes(self):
   print()
@@ -246,7 +245,7 @@ def print_all_event_list_actions(self):
             if prop_value_str not in all_actors[actor.name][action.name][prop.name]:
               all_actors[actor.name][action.name][prop.name][prop_value_str] = []
 
-            stage_and_event_name = "%s:%s" % (stage_name, event.name)
+            stage_and_event_name = f"{stage_name}:{event.name}"
             if stage_and_event_name not in all_actors[actor.name][action.name][prop.name][prop_value_str]:
               all_actors[actor.name][action.name][prop.name][prop_value_str].append(stage_and_event_name)
 
@@ -341,7 +340,7 @@ def print_item_table(self):
 
       f.write("Drop type 0x%02X:\n" % (0x20+i))
       for item_name, chance in drop_chances.items():
-        f.write("  % 6.2f%% %s\n" % (chance/0x10*100, item_name))
+        f.write("  {: 6.2f}% {}\n".format(chance/0x10*100, item_name))
 
 def print_actor_info(self):
   actor_id_to_rel_filename_mapping_addr = 0x803398D8 # DynamicNameTable
@@ -384,7 +383,7 @@ def print_actor_info(self):
         rel_filename = "[none]"
 
       # Condensed dump format for human readability and searching.
-      f.write("%7s:   ID %04X,   Subtype %02X,   GBAName %02X,   REL %s\n" % (
+      f.write("{:>7}:   ID {:04X},   Subtype {:02X},   GBAName {:02X},   REL {}\n".format(
         actr_name,
         actor_id,
         subtype_index,
@@ -406,7 +405,7 @@ def print_actor_info(self):
     for actor_id, rel_filename in actor_id_to_rel_filename.items():
       if actor_id not in done_actor_ids:
         # Print nameless actors
-        f.write(" [none]:   ID %04X,   Subtype [],   GBAName [],   REL %s\n" % (
+        f.write(" [none]:   ID {:04X},   Subtype [],   GBAName [],   REL {}\n".format(
           actor_id,
           rel_filename
         ))
@@ -427,7 +426,7 @@ def print_all_entity_params(self):
               if layer is not None:
                 location_identifier += "Layer%X/" % layer
               location_identifier += "%03X" % i
-              out_str = "% 7s %08X %04X %04X in %s" % (entity.name, entity.params, entity.aux_params_1, entity.aux_params_2, location_identifier)
+              out_str = f"{entity.name: 7} {entity.params:08X} {entity.aux_params_1:04X} {entity.aux_params_2:04X} in {location_identifier}"
               #print(out_str)
               f.write(out_str + "\n")
 
@@ -484,4 +483,4 @@ def print_all_actor_instance_sizes(self):
     for profile_name, actor_size in profile_name_to_actor_size:
       assert profile_name.startswith("g_profile_")
       class_name = profile_name[len("g_profile_"):]
-      f.write("%-19s: %5X\n" % (class_name, actor_size))
+      f.write(f"{class_name:<19}: {actor_size:5X}\n")

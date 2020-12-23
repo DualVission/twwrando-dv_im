@@ -1,4 +1,3 @@
-
 import os
 import re
 import yaml
@@ -85,18 +84,18 @@ def get_model_metadata(custom_model_name):
           try:
             value[custom_color_name] = parse_hex_color(hex_color, use_old_color_format)
           except InvalidColorError as e:
-            error_message = "Custom color \"%s\" has an invalid base color specified in metadata.txt: \"%s\"" % (custom_color_name, repr(hex_color))
+            error_message = "Custom color \"{}\" has an invalid base color specified in metadata.txt: \"{}\"".format(custom_color_name, repr(hex_color))
             return {
               "error_message": error_message,
             }
 
-          mask_path = os.path.join(color_masks_path, "%s_%s.png" % (prefix, custom_color_name))
+          mask_path = os.path.join(color_masks_path, f"{prefix}_{custom_color_name}.png")
           metadata["%s_color_mask_paths" % prefix][custom_color_name] = mask_path
-          hands_mask_path = os.path.join(color_masks_path, "hands_%s_%s.png" % (prefix, custom_color_name))
+          hands_mask_path = os.path.join(color_masks_path, f"hands_{prefix}_{custom_color_name}.png")
           metadata["hands_%s_color_mask_paths" % prefix][custom_color_name] = hands_mask_path
-          hitomi_mask_path = os.path.join(color_masks_path, "hitomi_%s_%s.png" % (prefix, custom_color_name))
+          hitomi_mask_path = os.path.join(color_masks_path, f"hitomi_{prefix}_{custom_color_name}.png")
           metadata["hitomi_%s_color_mask_paths" % prefix][custom_color_name] = hitomi_mask_path
-          preview_mask_path = os.path.join(previews_path, "preview_%s_%s.png" % (prefix, custom_color_name))
+          preview_mask_path = os.path.join(previews_path, f"preview_{prefix}_{custom_color_name}.png")
           metadata["preview_%s_color_mask_paths" % prefix][custom_color_name] = preview_mask_path
 
           for i in range(1, 9+1):
@@ -111,7 +110,7 @@ def get_model_metadata(custom_model_name):
             try:
               preset[custom_color_name] = parse_hex_color(hex_color, use_old_color_format)
             except InvalidColorError as e:
-              error_message = "Color preset \"%s\"'s color \"%s\" has an invalid base color specified in metadata.txt: \"%s\"" % (preset_name, custom_color_name, repr(hex_color))
+              error_message = "Color preset \"{}\"'s color \"{}\" has an invalid base color specified in metadata.txt: \"{}\"".format(preset_name, custom_color_name, repr(hex_color))
               return {
                 "error_message": error_message,
               }
@@ -548,7 +547,7 @@ def check_valid_mask_path(mask_path):
   true_filename = next(filename for filename in files_in_mask_folder if filename.lower() == given_filename.lower())
 
   if given_filename != true_filename:
-    raise Exception("Color mask path's actual capitalization differs from the capitalization given in metadata.txt.\nGiven: %s, actual: %s" % (given_filename, true_filename))
+    raise Exception(f"Color mask path's actual capitalization differs from the capitalization given in metadata.txt.\nGiven: {given_filename}, actual: {true_filename}")
 
 def get_default_colors(self):
   custom_model_metadata = get_model_metadata(self.custom_model_name)

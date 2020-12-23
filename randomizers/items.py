@@ -1,4 +1,3 @@
-
 import os
 import re
 
@@ -583,7 +582,7 @@ def change_scob_item(self, arc_path, scob_index, layer, item_id):
     scob.item_id = item_id
     scob.save_changes()
   else:
-    raise Exception("%s/SCOB%03X is an unknown type of SCOB" % (arc_path, scob_index))
+    raise Exception(f"{arc_path}/SCOB{scob_index:03X} is an unknown type of SCOB")
 
 def change_actor_item(self, arc_path, actor_index, layer, item_id):
   if arc_path.endswith("Stage.arc"):
@@ -594,6 +593,6 @@ def change_actor_item(self, arc_path, actor_index, layer, item_id):
   if actr.actor_class_name in ["d_a_item", "d_a_boss_item"]:
     actr.item_id = item_id
   else:
-    raise Exception("%s/ACTR%03X is not an item" % (arc_path, actor_index))
+    raise Exception(f"{arc_path}/ACTR{actor_index:03X} is not an item")
 
   actr.save_changes()

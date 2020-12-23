@@ -1,4 +1,3 @@
-
 from fs_helpers import *
 
 from data_tables import DataTables
@@ -241,7 +240,7 @@ class ChunkEntry:
       super().__setattr__(params_bitfield_name, new_params_value)
     else:
       if self.IS_ACTOR_CHUNK and attr_name not in ["offset", "file_entry", "name", "params", "x_pos", "y_pos", "z_pos", "aux_params_1", "y_rot", "aux_params_2", "enemy_number", "scale_x", "scale_y", "scale_z", "padding"]:
-        raise Exception("Tried to set unknown actor parameter \"%s\" for actor class %s (actor name: %s)" % (attr_name, self.actor_class_name, self.name))
+        raise Exception(f"Tried to set unknown actor parameter \"{attr_name}\" for actor class {self.actor_class_name} (actor name: {self.name})")
 
       self.__dict__[attr_name] = value
 
@@ -389,7 +388,7 @@ class TRES(ACTR):
 
 class PLYR(ACTR):
   def __init__(self, file_entry):
-    super(PLYR, self).__init__(file_entry)
+    super().__init__(file_entry)
 
     self.name = "Link"
     self.unknown_param_4 = 0xFF

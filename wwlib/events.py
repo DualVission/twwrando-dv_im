@@ -1,4 +1,3 @@
-
 from fs_helpers import *
 from io import BytesIO
 from collections import OrderedDict
@@ -268,9 +267,9 @@ class EventList:
           for integer in property_value:
             all_integers.append(integer)
         else:
-          raise Exception("Unknown type of property %s: %s" % (property.name, repr(property_value)))
+          raise Exception("Unknown type of property {}: {}".format(property.name, repr(property_value)))
       else:
-        raise Exception("Unknown type of property %s: %s" % (property.name, repr(property_value)))
+        raise Exception("Unknown type of property {}: {}".format(property.name, repr(property_value)))
 
     self.float_list_offset = offset
     num_floats = len(all_floats)

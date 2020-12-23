@@ -44,7 +44,7 @@ yaml.CDumper.add_representer(
 # Change how yaml dumps lists so each element isn't on a separate line.
 yaml.CDumper.add_representer(
   list,
-  lambda dumper, data: dumper.represent_sequence(u'tag:yaml.org,2002:seq', data, flow_style=True)
+  lambda dumper, data: dumper.represent_sequence('tag:yaml.org,2002:seq', data, flow_style=True)
 )
 
 # Output integers as hexadecimal.
@@ -61,11 +61,11 @@ custom_symbols = OrderedDict()
 custom_symbols["sys/main.dol"] = OrderedDict()
 
 try:
-  with open("free_space_start_offsets.txt", "r") as f:
+  with open("free_space_start_offsets.txt") as f:
     free_space_start_offsets = yaml.safe_load(f)
   expPath = "./"
 except:
-  with open("asm/free_space_start_offsets.txt", "r") as f:
+  with open("asm/free_space_start_offsets.txt") as f:
     free_space_start_offsets = yaml.safe_load(f)
   expPath = "asm/"
 
@@ -118,7 +118,7 @@ def try_apply_local_relocation(bin_name, elf_relocation, elf_symbol):
 
     if elf_relocation.type == ELFRelocationType.R_PPC_REL24:
       if relative_branch_offset > 0x1FFFFFF or relative_branch_offset < -0x2000000:
-        raise Exception("Relocation failed: Cannot branch from %X to %X with a 24-bit relative offset." % (branch_src_offset, branch_dest_offset))
+        raise Exception(f"Relocation failed: Cannot branch from {branch_src_offset:X} to {branch_dest_offset:X} with a 24-bit relative offset.")
 
       with open(bin_name, "r+b") as f:
         instruction = read_u32(f, elf_relocation.relocation_offset)
@@ -129,7 +129,7 @@ def try_apply_local_relocation(bin_name, elf_relocation, elf_symbol):
       return True
     elif elf_relocation.type == ELFRelocationType.R_PPC_REL14:
       if relative_branch_offset > 0x7FFF or relative_branch_offset < -0x8000:
-        raise Exception("Relocation failed: Cannot branch from %X to %X with a 14-bit relative offset." % (branch_src_offset, branch_dest_offset))
+        raise Exception(f"Relocation failed: Cannot branch from {branch_src_offset:X} to {branch_dest_offset:X} with a 14-bit relative offset.")
 
       with open(bin_name, "r+b") as f:
         instruction = read_u32(f, elf_relocation.relocation_offset)
@@ -188,7 +188,7 @@ try:
       if open_file_match:
         relative_file_path = open_file_match.group(1)
         if most_recent_file_path or most_recent_org_offset is not None:
-          raise Exception("File %s was not closed before opening new file %s" % (most_recent_file_path, relative_file_path))
+          raise Exception(f"File {most_recent_file_path} was not closed before opening new file {relative_file_path}")
         if relative_file_path not in code_chunks[patch_name]:
           code_chunks[patch_name][relative_file_path] = OrderedDict()
         if relative_file_path not in local_branches_linker_script_for_file:
@@ -201,7 +201,7 @@ try:
 
         org_offset = int(org_match.group(1), 16)
         if org_offset >= free_space_start_offsets[most_recent_file_path]:
-          raise Exception("Tried to manually set the origin point to after the start of free space.\n.org offset: 0x%X\nFile path: %s\n\nUse \".org @NextFreeSpace\" instead to get an automatically assigned free space offset." % (org_offset, most_recent_file_path))
+          raise Exception(f"Tried to manually set the origin point to after the start of free space.\n.org offset: 0x{org_offset:X}\nFile path: {most_recent_file_path}\n\nUse \".org @NextFreeSpace\" instead to get an automatically assigned free space offset.")
 
         code_chunks[patch_name][most_recent_file_path][org_offset] = ""
         most_recent_org_offset = org_offset
@@ -226,7 +226,7 @@ try:
         # Replace branches to specific addresses with labels, and define the address of those labels in the linker script.
         branch_dest = int(branch_match.group(1), 16)
         branch_temp_label = "branch_label_%X" % branch_dest
-        local_branches_linker_script_for_file[most_recent_file_path] += "%s = 0x%X;\n" % (branch_temp_label, branch_dest)
+        local_branches_linker_script_for_file[most_recent_file_path] += f"{branch_temp_label} = 0x{branch_dest:X};\n"
         line = re.sub(r"0x" + branch_match.group(1), branch_temp_label, line, 1)
       elif line == ".close":
         most_recent_file_path = None
@@ -282,13 +282,13 @@ try:
       temp_linker_script = linker_script + "\n"
       # Add custom symbols in the current file to the temporary linker script.
       for symbol_name, symbol_address in custom_symbols[file_path].items():
-        temp_linker_script += "%s = 0x%08X;\n" % (symbol_name, symbol_address)
+        temp_linker_script += f"{symbol_name} = 0x{symbol_address:08X};\n"
       # And add any local branches inside this file.
       temp_linker_script += local_branches_linker_script_for_file[file_path]
       if file_path != "sys/main.dol":
         # Also add custom symbols in main.dol for all files.
         for symbol_name, symbol_address in custom_symbols["sys/main.dol"].items():
-          temp_linker_script += "%s = 0x%08X;\n" % (symbol_name, symbol_address)
+          temp_linker_script += f"{symbol_name} = 0x{symbol_address:08X};\n"
 
       for org_offset_or_symbol, temp_asm in code_chunks_for_file_sorted:
         if isinstance(org_offset_or_symbol, int):
@@ -365,7 +365,7 @@ try:
               symbol_address = int(match.group(1), 16)
               symbol_name = match.group(2)
               custom_symbols_for_file[symbol_name] = symbol_address
-              temp_linker_script += "%s = 0x%08X;\n" % (symbol_name, symbol_address)
+              temp_linker_script += f"{symbol_name} = 0x{symbol_address:08X};\n"
 
         if file_path.endswith(".rel"):
           # This is for a REL, so we can't link it.

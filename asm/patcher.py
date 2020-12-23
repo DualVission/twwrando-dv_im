@@ -1,4 +1,3 @@
-
 import os
 import yaml
 import re
@@ -190,7 +189,7 @@ def add_relocations_to_rel(self, file_path, rel_section_index, offset_into_secti
       other_rel_symbols = self.get_symbol_map("files/maps/%s.map" % rel_name)
       
       if symbol_name not in other_rel_symbols:
-        raise Exception("Symbol \"%s\" could not be found in the symbol map for REL %s.rel" % (symbol_name, rel_name))
+        raise Exception(f"Symbol \"{symbol_name}\" could not be found in the symbol map for REL {rel_name}.rel")
       
       module_num = other_rel.id
       

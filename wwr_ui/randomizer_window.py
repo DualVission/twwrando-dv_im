@@ -50,11 +50,11 @@ def sortItems(inputList=[],keyList=SORT_KEY):
 '''
 
 class WWRandomizerWindow(QMainWindow):
-  VALID_SEED_CHARACTERS = "-_'%%.%s%s" % (string.ascii_letters, string.digits)
+  VALID_SEED_CHARACTERS = f"-_'%.{string.ascii_letters}{string.digits}"
   MAX_SEED_LENGTH = 42 # Limited by maximum length of game name in banner
 
   def __init__(self, cmd_line_args=OrderedDict()):
-    super(WWRandomizerWindow, self).__init__()
+    super().__init__()
     self.ui = Ui_MainWindow()
     self.ui.setupUi(self)
 
@@ -576,7 +576,7 @@ class WWRandomizerWindow(QMainWindow):
     if given_version_num != VERSION:
       QMessageBox.critical(
         self, "Invalid permalink",
-        "The permalink you pasted is for version %s of the randomizer, it cannot be used with the version you are currently using (%s)." % (given_version_num, VERSION)
+        f"The permalink you pasted is for version {given_version_num} of the randomizer, it cannot be used with the version you are currently using ({VERSION})."
       )
       return
 
@@ -725,13 +725,13 @@ class WWRandomizerWindow(QMainWindow):
           break
 
       if index_of_value is None:
-        print("Cannot find value %s in combobox %s" % (new_value, option_name))
+        print(f"Cannot find value {new_value} in combobox {option_name}")
         index_of_value = 0
 
       widget.setCurrentIndex(index_of_value)
     elif isinstance(widget, QSpinBox):
       if new_value < widget.minimum() or new_value > widget.maximum():
-        print("Value %s out of range for spinbox %s" % (new_value, option_name))
+        print(f"Value {new_value} out of range for spinbox {option_name}")
         new_value = self.default_settings[option_name] # reset to default in case 0 is not default or in normal range
 
       widget.setValue(new_value)
@@ -792,7 +792,7 @@ class WWRandomizerWindow(QMainWindow):
     custom_logic_names = xfx.get_all_custom_logic()
     if(len(custom_logic_names)!=0):
       for custom_logic_name in custom_logic_names:
-        self.ui.logic_mod.addItem("Custom – {}".format(custom_logic_name))
+        self.ui.logic_mod.addItem(f"Custom – {custom_logic_name}")
 
   def initialize_custom_player_model_list(self):
     self.ui.custom_player_model.addItem("Link")
@@ -1451,7 +1451,7 @@ class WWRandomizerWindow(QMainWindow):
 
 class ModelFilterOut(QSortFilterProxyModel):
   def __init__(self):
-    super(ModelFilterOut, self).__init__()
+    super().__init__()
     self.filter_strings = []
 
   def setFilterStrings(self, fstr):

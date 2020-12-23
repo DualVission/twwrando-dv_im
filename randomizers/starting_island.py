@@ -1,4 +1,3 @@
-
 import tweaks
 from class_ms import YamlOrderedDictLoader
 
@@ -30,7 +29,7 @@ def get_starting_island(self,starting_island_room_index):
     island_data = yaml.load(f, YamlOrderedDictLoader)
 
   starting_island_name = island_data[starting_island_room_index]["Long Name"]
-  island_macro = "Can Travel to {}".format(starting_island_name)
+  island_macro = f"Can Travel to {starting_island_name}"
 
   req_string = "Nothing"
   self.set_macro(island_macro, req_string)

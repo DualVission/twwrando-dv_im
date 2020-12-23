@@ -1,11 +1,10 @@
-
 import os
 import yaml
 
 from paths import DATA_PATH
 
 def read_actor_info():
-  with open(os.path.join(DATA_PATH, "actor_info.txt"), "r") as f:
+  with open(os.path.join(DATA_PATH, "actor_info.txt")) as f:
     actor_info = yaml.safe_load(f)
   
   actor_name_to_class_name = {}
@@ -19,7 +18,7 @@ def read_actor_info():
   return actor_name_to_class_name
 
 def read_actor_params():
-  with open(os.path.join(DATA_PATH, "actor_parameters.txt"), "r") as f:
+  with open(os.path.join(DATA_PATH, "actor_parameters.txt")) as f:
     case_sensitive_actor_parameters = yaml.safe_load(f)
   
   actor_parameters = {}

@@ -1,4 +1,3 @@
-
 import os
 from io import BytesIO
 import re
@@ -230,7 +229,7 @@ class Message:
         control_code_size = read_u8(string_pool_data, byte_offset)
         byte_offset += 1
 
-        self.string += "\\{%02X %02X" % (byte, control_code_size)
+        self.string += f"\\{{{byte:02X} {control_code_size:02X}"
 
         for i in range(control_code_size-2):
           control_code_data_byte = read_u8(string_pool_data, byte_offset)

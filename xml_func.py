@@ -66,7 +66,7 @@ def parseXML(file):
 
 def get_all_custom_logic(*args):
   custom_logic_names = OrderedDict()
-  custom_logic_paths = glob.glob("{}*{}".format(file_path,file_ext))
+  custom_logic_paths = glob.glob(f"{file_path}*{file_ext}")
   for logic_path in custom_logic_paths:
     if(logic_path in extempt_files):
       continue

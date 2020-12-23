@@ -1,4 +1,3 @@
-
 from PIL import Image
 from io import BytesIO
 import colorsys
@@ -1243,7 +1242,7 @@ def color_exchange(image, base_color, replacement_color, mask_path=None, validat
               if mask_pixels[x, y] not in invalid_colors:
                 invalid_colors.append(mask_pixels[x, y])
         invalid_colors_str = ", ".join("%02X%02X%02X%02X" % color for color in invalid_colors)
-        new_err_message = "Mask %s has invalid colors in it. Only pure red (FF0000FF) and pure white (FFFFFFFF) are allowed.\n\nAll invalid colors in the mask are: %s" % (mask_path, invalid_colors_str)
+        new_err_message = f"Mask {mask_path} has invalid colors in it. Only pure red (FF0000FF) and pure white (FFFFFFFF) are allowed.\n\nAll invalid colors in the mask are: {invalid_colors_str}"
         e.args = (new_err_message,)
         raise
       else:
@@ -1291,7 +1290,7 @@ def color_exchange(image, base_color, replacement_color, mask_path=None, validat
           else:
             # Not red or white and also not completely transparent, so this is an invalid color.
             r, g, b, a = mask_pixels[x, y]
-            raise Exception("Invalid color %02X%02X%02X%02X in mask %s" % (r, g, b, a, mask_path))
+            raise Exception(f"Invalid color {r:02X}{g:02X}{b:02X}{a:02X} in mask {mask_path}")
         else:
           if mask_pixels[x, y] != (255, 0, 0, 255):
             continue

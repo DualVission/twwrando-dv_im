@@ -1,4 +1,3 @@
-
 import re
 import yaml
 import os
@@ -914,7 +913,7 @@ def update_item_names_in_letter_advertising_rock_spire_shop(self):
   unchanged_string_before = "\n".join(lines[0:8]) + "\n"
   unchanged_string_after = "\n".join(lines[12:])
 
-  hint_string = "Do you have need of %s \\{1A 06 FF 00 00 01}%s\\{1A 06 FF 00 00 00}, %s \\{1A 06 FF 00 00 01}%s\\{1A 06 FF 00 00 00}, or %s \\{1A 06 FF 00 00 01}%s\\{1A 06 FF 00 00 00}? We have them at special bargain prices." % (
+  hint_string = "Do you have need of {} \\{{1A 06 FF 00 00 01}}{}\\{{1A 06 FF 00 00 00}}, {} \\{{1A 06 FF 00 00 01}}{}\\{{1A 06 FF 00 00 00}}, or {} \\{{1A 06 FF 00 00 01}}{}\\{{1A 06 FF 00 00 00}}? We have them at special bargain prices.".format(
     get_indefinite_article(item_name_1), item_name_1,
     get_indefinite_article(item_name_2), item_name_2,
     get_indefinite_article(item_name_3), item_name_3,
@@ -1076,7 +1075,7 @@ def update_fishmen_hints(self, hints):
 
     hint_lines = []
     hint_lines.append(
-      "I've heard from my sources that \\{1A 06 FF 00 00 01}%s\\{1A 06 FF 00 00 00} is located in \\{1A 06 FF 00 00 01}%s\\{1A 06 FF 00 00 00}." % (item_hint_name, island_hint_name)
+      f"I've heard from my sources that \\{{1A 06 FF 00 00 01}}{item_hint_name}\\{{1A 06 FF 00 00 00}} is located in \\{{1A 06 FF 00 00 01}}{island_hint_name}\\{{1A 06 FF 00 00 00}}."
     )
     # Add a two-second wait command (delay) to prevent the player from skipping over the hint accidentally.
     hint_lines[-1] += "\\{1A 07 00 00 07 00 3C}"
@@ -2293,7 +2292,7 @@ def remove_minor_panning_cutscenes(self):
   ]
 
   for stage_name, arc_name, evnt_index in panning_cutscenes:
-    arc = self.get_arc("files/res/Stage/%s/%s.arc" % (stage_name, arc_name))
+    arc = self.get_arc(f"files/res/Stage/{stage_name}/{arc_name}.arc")
     if arc_name == "Stage":
       dzx = arc.get_file("stage.dzs")
     else:

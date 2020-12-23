@@ -1,4 +1,3 @@
-
 import os
 
 from wwlib import texture_utils

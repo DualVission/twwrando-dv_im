@@ -1,4 +1,3 @@
-
 import struct
 from io import BytesIO
 
@@ -105,7 +104,7 @@ class Yaz0:
 
         if num_bytes >= 0x12:
           dst.append((dist & 0xFF00) >> 8)
-          dst.append((dist & 0x00FF))
+          dst.append(dist & 0x00FF)
 
           if num_bytes > Yaz0.MAX_RUN_LENGTH:
             num_bytes = Yaz0.MAX_RUN_LENGTH

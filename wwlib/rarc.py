@@ -1,4 +1,3 @@
-
 import os
 from io import BytesIO
 from enum import IntFlag
@@ -456,7 +455,7 @@ class RARC:
         if curr_node == self.nodes[0]:
           # Root node
           break
-        curr_path = "%s/%s" % (curr_node.dir_entry.name, curr_path)
+        curr_path = f"{curr_node.dir_entry.name}/{curr_path}"
         curr_node = curr_node.dir_entry.parent_node
 
       if curr_path == path:
