@@ -4,9 +4,10 @@ import yaml
 
 
 class YamlOrderedDictLoader(yaml.SafeLoader):
-  pass
+    pass
+
 
 YamlOrderedDictLoader.add_constructor(
-  yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
-  lambda loader, node: OrderedDict(loader.construct_pairs(node))
+    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+    lambda loader, node: OrderedDict(loader.construct_pairs(node)),
 )
