@@ -1,4 +1,3 @@
-
 ### About
 
 This is a randomizer for The Legend of Zelda: The Wind Waker.  
@@ -25,7 +24,7 @@ Please report bugs like that here: https://github.com/LagoLunatic/wwrando/issues
 In the bug report be sure to include the permalink for the seed you encountered the bug on.
 
 If you're going to play on emulator, you should use the latest development version of Dolphin which can be found at the top of this page: https://dolphin-emu.org/download/  
-Note that the GameCube boot up animation in Dolphin doesn't work with the randomizer and will cause the game to crash before reaching the main menu. If you have previously set Dolphin up to play that animation you will need to disable it before launching the randomized game by going to Config -> GameCube in Dolphin and checking "Skip Main Menu".  
+Note that the GameCube boot up animation in Dolphin doesn't work with the randomizer and will cause the game to crash before reaching the main menu. If you have previously set Dolphin up to play that animation you will need to disable it before launching the randomized game by going to Config -> GameCube in Dolphin and checking "Skip Main Menu".
 
 ### Discord Server
 
@@ -52,21 +51,21 @@ If you want to run the latest development/beta version of the randomizer from so
 
 Download and install git from here: https://git-scm.com/downloads  
 Then clone this repository with git by running this in a command prompt:  
-`git clone https://github.com/LagoLunatic/wwrando.git`  
+`git clone https://github.com/LagoLunatic/wwrando.git`
 
 Download and install Python 3.8.2 from here: https://www.python.org/downloads/release/python-382/  
 "Windows x86-64 executable installer" is the one you want if you're on Windows, "macOS 64-bit installer" if you're on Mac.  
-If you're on Linux, run this command instead: `sudo apt-get install python3.8`  
+If you're on Linux, run this command instead: `sudo apt-get install python3.8`
 
 Open the wwrando folder in a command prompt and install dependencies by running:  
 `py -3.8 -m pip install -r requirements.txt` (on Windows)  
 `python3 -m pip install -r requirements.txt` (on Mac)  
-`python3 -m pip install $(cat requirements.txt) --user` (on Linux)  
+`python3 -m pip install $(cat requirements.txt) --user` (on Linux)
 
 Then run the randomizer with:  
 `py -3.8 wwrando.py` (on Windows)  
 `python3 wwrando.py` (on Mac)  
-`python3 wwrando.py` (on Linux)  
+`python3 wwrando.py` (on Linux)
 
 Optionally, you can also install `requirements_full.txt` with the same process you used for `requirements.txt` above.  
 `requirements_full.txt` will install additional libraries that speed up texture recoloring, as well as for building a distributable version of the randomizer. You can still run the randomizer from source without these. You will also need Visual Studio.
