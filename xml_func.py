@@ -1,8 +1,10 @@
-import xml.dom.minidom as minidom
-from paths import TYPE_PATH
-import os
 import glob
+import os
+import xml.dom.minidom as minidom
 from collections import OrderedDict
+
+from paths import TYPE_PATH
+
 #from logic.logic import Logic
 
 file_ext = ".dv_im"

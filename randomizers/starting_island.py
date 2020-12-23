@@ -1,10 +1,12 @@
+import os
+from collections import OrderedDict
+
+import yaml
+
 import tweaks
 from class_ms import YamlOrderedDictLoader
-
-import os
 from paths import DATA_PATH
-import yaml
-from collections import OrderedDict
+
 
 def randomize_starting_island(self):
   possible_starting_islands = list(range(1, 49+1))

@@ -1,5 +1,6 @@
 from fs_helpers import *
 
+
 class DOL:
   TEXT_SECTION_COUNT = 7
   DATA_SECTION_COUNT = 11

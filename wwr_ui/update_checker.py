@@ -1,6 +1,6 @@
-import urllib.request
 import json
 import traceback
+import urllib.request
 from distutils.version import LooseVersion
 
 from randomizer import VERSION

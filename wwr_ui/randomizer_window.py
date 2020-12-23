@@ -1,37 +1,45 @@
-from PySide2.QtGui import *
-from PySide2.QtCore import *
-from PySide2.QtWidgets import *
-
-from wwr_ui.ui_randomizer_window import Ui_MainWindow
-from wwr_ui.options import OPTIONS, NON_PERMALINK_OPTIONS, HIDDEN_OPTIONS, POTENTIALLY_UNBEATABLE_OPTIONS
-from wwr_ui.update_checker import check_for_updates, LATEST_RELEASE_DOWNLOAD_PAGE_URL
-from wwr_ui.inventory import * #INVENTORY_ITEMS, REGULAR_ITEMS, PROGRESSIVE_ITEMS, DUNGEON_NONPROGRESS_ITEMS, SORT_KEY, STNDRD_ITEMS
-from wwr_ui.packedbits import PackedBitsReader, PackedBitsWriter
-
-import xml_func as xfx
-
-import random
+import base64
 import collections
-from collections import OrderedDict
-
+import colorsys
 import os
-import traceback
+import random
 import string
 import struct
-import base64
-import colorsys
 import time
+import traceback
+from collections import OrderedDict
 
 import yaml
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
+import xml_func as xfx
+from wwr_ui.inventory import *  # INVENTORY_ITEMS, REGULAR_ITEMS, PROGRESSIVE_ITEMS, DUNGEON_NONPROGRESS_ITEMS, SORT_KEY, STNDRD_ITEMS
+from wwr_ui.options import (
+    HIDDEN_OPTIONS,
+    NON_PERMALINK_OPTIONS,
+    OPTIONS,
+    POTENTIALLY_UNBEATABLE_OPTIONS,
+)
+from wwr_ui.packedbits import PackedBitsReader, PackedBitsWriter
+from wwr_ui.ui_randomizer_window import Ui_MainWindow
+from wwr_ui.update_checker import LATEST_RELEASE_DOWNLOAD_PAGE_URL, check_for_updates
+
 try:
   from yaml import CDumper as Dumper
 except ImportError:
   from yaml import Dumper
 
-from randomizer import Randomizer, VERSION, TooFewProgressionLocationsError, InvalidCleanISOError
-from paths import ASSETS_PATH, SEEDGEN_PATH, IS_RUNNING_FROM_SOURCE
 import customizer
 from logic.logic import Logic
+from paths import ASSETS_PATH, IS_RUNNING_FROM_SOURCE, SEEDGEN_PATH
+from randomizer import (
+    VERSION,
+    InvalidCleanISOError,
+    Randomizer,
+    TooFewProgressionLocationsError,
+)
 from wwlib import texture_utils
 
 '''
@@ -1495,7 +1503,8 @@ class RandomizerThread(QThread):
 
   def run(self):
     if self.profiling:
-      import cProfile, pstats
+      import cProfile
+      import pstats
       profiler = cProfile.Profile()
       profiler.enable()
 

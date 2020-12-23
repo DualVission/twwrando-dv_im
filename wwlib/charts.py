@@ -3,6 +3,7 @@ from io import BytesIO
 
 from fs_helpers import *
 
+
 class ChartList:
   def __init__(self, file_entry):
     self.file_entry = file_entry

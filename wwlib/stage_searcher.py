@@ -2,9 +2,9 @@ import os
 import re
 from collections import OrderedDict
 
+from data_tables import DataTables
 from fs_helpers import *
 
-from data_tables import DataTables
 
 def each_stage_and_room(self, exclude_stages=False, exclude_rooms=False, stage_name_to_limit_to=None, exclude_unused=True):
   all_filenames = list(self.gcm.files_by_path.keys())

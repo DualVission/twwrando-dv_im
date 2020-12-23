@@ -1,16 +1,16 @@
 import os
-from io import BytesIO
 from enum import IntFlag
+from io import BytesIO
 
 from fs_helpers import *
-from wwlib.yaz0 import Yaz0
-
+from wwlib.bmg import BMG
+from wwlib.bti import BTIFileEntry
+from wwlib.charts import ChartList
 from wwlib.dzx import DZx
 from wwlib.events import EventList
-from wwlib.bmg import BMG
-from wwlib.charts import ChartList
 from wwlib.j3d import BDL, BMD, BMT, BRK
-from wwlib.bti import BTIFileEntry
+from wwlib.yaz0 import Yaz0
+
 
 class RARC:
   def __init__(self):

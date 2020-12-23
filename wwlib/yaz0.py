@@ -3,6 +3,7 @@ from io import BytesIO
 
 from fs_helpers import *
 
+
 class Yaz0:
   MAX_RUN_LENGTH = 0xFF + 0x12
 

@@ -1,12 +1,10 @@
 import os
-from enum import Enum
-from io import BytesIO
 from collections import OrderedDict
 from enum import Enum
-
-from wwlib.bti import BTI
+from io import BytesIO
 
 from fs_helpers import *
+from wwlib.bti import BTI
 
 IMPLEMENTED_CHUNK_TYPES = [
   "TEX1",

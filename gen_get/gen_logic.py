@@ -1,8 +1,10 @@
-import yaml
 import os
-from paths import LOGIC_PATH, TYPE_PATH, TRICK_PATH
 from collections import OrderedDict
+
+import yaml
+
 from class_ms import YamlOrderedDictLoader
+from paths import LOGIC_PATH, TRICK_PATH, TYPE_PATH
 
 forbidden_keys = ["Paths","Original item","Mode"]
 path_input = LOGIC_PATH

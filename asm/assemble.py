@@ -1,15 +1,16 @@
 import glob
-import re
-from subprocess import call
 import os
-import tempfile
+import re
 import shutil
-from collections import OrderedDict
 import struct
-import yaml
-import traceback
-
 import sys
+import tempfile
+import traceback
+from collections import OrderedDict
+from subprocess import call
+
+import yaml
+
 sys.path.insert(0, "../")
 try:
   from fs_helpers import *

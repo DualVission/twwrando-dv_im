@@ -1,6 +1,6 @@
-from subprocess import call
 import glob
 import os
+from subprocess import call
 
 for input_path in glob.glob('*.ui'):
   base_name = os.path.splitext(input_path)[0]

@@ -1,8 +1,9 @@
-from PIL import Image
-from io import BytesIO
 import colorsys
-from enum import Enum
 import operator
+from enum import Enum
+from io import BytesIO
+
+from PIL import Image
 
 from fs_helpers import *
 

@@ -1,16 +1,16 @@
 #!/usr/bin/python3.8
 
-from PySide2.QtGui import *
-from PySide2.QtCore import *
-from PySide2.QtWidgets import *
-
+# Allow keyboard interrupts on the command line to instantly close the program.
+import signal
 import sys
 from collections import OrderedDict
 
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
 from wwr_ui.randomizer_window import WWRandomizerWindow
 
-# Allow keyboard interrupts on the command line to instantly close the program.
-import signal
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 try:

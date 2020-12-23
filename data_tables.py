@@ -1,7 +1,9 @@
 import os
+
 import yaml
 
 from paths import DATA_PATH
+
 
 def read_actor_info():
   with open(os.path.join(DATA_PATH, "actor_info.txt")) as f:

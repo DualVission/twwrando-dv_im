@@ -1,6 +1,6 @@
+from data_tables import DataTables
 from fs_helpers import *
 
-from data_tables import DataTables
 
 class DZx: # DZR or DZS, same format
   def __init__(self, file_entry):

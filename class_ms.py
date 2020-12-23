@@ -1,5 +1,7 @@
-import yaml
 from collections import OrderedDict
+
+import yaml
+
 
 class YamlOrderedDictLoader(yaml.SafeLoader):
   pass

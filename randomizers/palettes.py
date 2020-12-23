@@ -1,8 +1,8 @@
 import os
 
+from fs_helpers import *
 from wwlib import texture_utils
 
-from fs_helpers import *
 
 def randomize_enemy_palettes(self):
   for randomizable_file_group in self.palette_randomizable_files:

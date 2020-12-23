@@ -1,8 +1,9 @@
 import os
 import re
 
-from fs_helpers import *
 import tweaks
+from fs_helpers import *
+
 
 def randomize_items(self):
   print("Randomizing items...")

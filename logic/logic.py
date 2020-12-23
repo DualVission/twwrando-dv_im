@@ -1,23 +1,35 @@
-import yaml
-import re
-from collections import OrderedDict
 import copy
-import xml.dom.minidom as minidom
 import glob
-from class_ms import YamlOrderedDictLoader
-
 import os
-
-from logic.item_types import PROGRESS_ITEMS, NONPROGRESS_ITEMS, CONSUMABLE_ITEMS, DUPLICATABLE_CONSUMABLE_ITEMS, DUNGEON_PROGRESS_ITEMS, DUNGEON_NONPROGRESS_ITEMS, CONVENIENCE_ITEMS, XTRA_ITEMS, HEALTH_ITEMS
-from paths import LOGIC_PATH, TRICK_PATH,TYPE_PATH
-from randomizers import entrances, starting_island
-from tweaks import *
-import wwr_ui.options
-import xml_func as xfx
-#import settings as ui_rando
+import re
+import xml.dom.minidom as minidom
+from collections import OrderedDict
 
 #from sys import getrecursionlimit as getRL
 from sys import setrecursionlimit as setRL
+
+import yaml
+
+import wwr_ui.options
+import xml_func as xfx
+from class_ms import YamlOrderedDictLoader
+from logic.item_types import (
+    CONSUMABLE_ITEMS,
+    CONVENIENCE_ITEMS,
+    DUNGEON_NONPROGRESS_ITEMS,
+    DUNGEON_PROGRESS_ITEMS,
+    DUPLICATABLE_CONSUMABLE_ITEMS,
+    HEALTH_ITEMS,
+    NONPROGRESS_ITEMS,
+    PROGRESS_ITEMS,
+    XTRA_ITEMS,
+)
+from paths import LOGIC_PATH, TRICK_PATH, TYPE_PATH
+from randomizers import entrances, starting_island
+from tweaks import *
+
+#import settings as ui_rando
+
 
 class Logic:
   DUNGEON_NAMES = OrderedDict([

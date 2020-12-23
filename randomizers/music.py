@@ -1,8 +1,8 @@
 from collections import OrderedDict
 
 from fs_helpers import *
-
 from randomizers.music_constants import *
+
 
 def randomize_music(self):
   stage_bgm_info_list_start = 0x8039C30C

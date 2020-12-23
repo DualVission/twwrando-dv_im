@@ -1,21 +1,21 @@
-import re
-import yaml
-import os
-from io import BytesIO
-from collections import namedtuple
-from collections import OrderedDict
 import copy
-from random import Random
+import os
 import random
+import re
+from collections import OrderedDict, namedtuple
+from io import BytesIO
+from random import Random
 
-from fs_helpers import *
+import yaml
+
+import customizer
 from asm import patcher
+from fs_helpers import *
+from paths import ASM_PATH, ASSETS_PATH, SEEDGEN_PATH
 from wwlib import texture_utils
 from wwlib.rarc import RARC
-from wwlib.rel import REL, RELSection, RELRelocation, RELRelocationType
-from paths import ASSETS_PATH, ASM_PATH, SEEDGEN_PATH
-import customizer
-from wwr_ui.options import OPTIONS, NON_PERMALINK_OPTIONS
+from wwlib.rel import REL, RELRelocation, RELRelocationType, RELSection
+from wwr_ui.options import NON_PERMALINK_OPTIONS, OPTIONS
 
 dungeon_num_race_mode = "NaN"
 starting_triforce = "NaN"

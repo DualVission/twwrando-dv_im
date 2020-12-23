@@ -1,16 +1,17 @@
+import glob
 import os
 import re
-import yaml
 from collections import OrderedDict
 from io import BytesIO
-import glob
-from PIL import Image
-from class_ms import YamlOrderedDictLoader
 
+import yaml
+from PIL import Image
+
+from class_ms import YamlOrderedDictLoader
 from fs_helpers import data_len
-from wwlib.texture_utils import *
-from wwlib import texture_utils
 from paths import ASSETS_PATH
+from wwlib import texture_utils
+from wwlib.texture_utils import *
 
 ORIG_LINK_ARC_FILE_SIZE_IN_BYTES  = 1308608
 ORIG_LKANM_ARC_FILE_SIZE_IN_BYTES = 1842464

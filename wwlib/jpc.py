@@ -1,11 +1,11 @@
-from io import BytesIO
-import os
 import glob
+import os
 from collections import OrderedDict
+from io import BytesIO
 
 from fs_helpers import *
-
 from wwlib.bti import BTI
+
 
 class JPC:
   def __init__(self, data):

@@ -1,41 +1,42 @@
-import os
-from io import BytesIO
-import shutil
-from pathlib import Path
-import re
-from random import Random
-from collections import OrderedDict
 import hashlib
-import yaml
-import tweaks
+import os
+import re
+import shutil
+from collections import OrderedDict
+from io import BytesIO
+from pathlib import Path
+from random import Random
 
+import yaml
+
+import customizer
+import tweaks
+from asm import disassemble, patcher
 from fs_helpers import *
-from wwlib.yaz0 import Yaz0
-from wwlib.rarc import RARC
+from logic.logic import Logic
+from paths import ASM_PATH, DATA_PATH, IS_RUNNING_FROM_SOURCE, RANDO_ROOT_PATH
+from wwlib import stage_searcher
 from wwlib.dol import DOL
-from wwlib.rel import REL, RELRelocation, RELRelocationType
 from wwlib.gcm import GCM
 from wwlib.jpc import JPC
-import tweaks
-from asm import patcher
-from logic.logic import Logic
-from paths import DATA_PATH, ASM_PATH, RANDO_ROOT_PATH, IS_RUNNING_FROM_SOURCE
-import customizer
-from wwlib import stage_searcher
-from asm import disassemble
+from wwlib.rarc import RARC
+from wwlib.rel import REL, RELRelocation, RELRelocationType
+from wwlib.yaz0 import Yaz0
 
 try:
   from keys.seed_key import SEED_KEY
 except ImportError:
   SEED_KEY = ""
 
-from randomizers import items
-from randomizers import charts
-from randomizers import starting_island
-from randomizers import entrances
-from randomizers import music
-from randomizers import enemies
-from randomizers import palettes
+from randomizers import (
+    charts,
+    enemies,
+    entrances,
+    items,
+    music,
+    palettes,
+    starting_island,
+)
 
 with open(os.path.join(RANDO_ROOT_PATH, "version.txt")) as f:
   VERSION = f.read().strip()

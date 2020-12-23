@@ -1,15 +1,15 @@
-from subprocess import call
-from subprocess import DEVNULL
-import tempfile
 import os
 import re
-from io import BytesIO
+import tempfile
 from collections import OrderedDict
+from io import BytesIO
+from subprocess import DEVNULL, call
 
 from fs_helpers import *
-from wwlib.yaz0 import Yaz0
-from wwlib.rel import REL
 from paths import ASM_PATH
+from wwlib.rel import REL
+from wwlib.yaz0 import Yaz0
+
 
 def disassemble_all_code(self):
   if not os.path.isfile(r"C:\devkitPro\devkitPPC\bin\powerpc-eabi-objdump.exe"):

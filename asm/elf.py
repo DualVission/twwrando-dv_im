@@ -1,6 +1,6 @@
+from collections import OrderedDict
 from enum import Enum
 from io import BytesIO
-from collections import OrderedDict
 
 try:
   from fs_helpers import *

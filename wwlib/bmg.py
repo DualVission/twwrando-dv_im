@@ -1,8 +1,9 @@
 import os
-from io import BytesIO
 import re
+from io import BytesIO
 
 from fs_helpers import *
+
 
 class BMG:
   def __init__(self, file_entry):

@@ -1,11 +1,11 @@
-import os
 import copy
+import math
+import os
 import re
 from collections import OrderedDict
-import math
 
-from wwlib import stage_searcher
 from logic.logic import Logic
+from wwlib import stage_searcher
 
 # This variable is for debugging specific enemies.
 # Set it to the name of a specific enemy type and it will handle putting that enemy type in every single enemy location throughout the game - ignoring memory and logic limits.
