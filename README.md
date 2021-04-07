@@ -25,7 +25,9 @@ Please report bugs like that here: https://github.com/LagoLunatic/wwrando/issues
 In the bug report be sure to include the permalink for the seed you encountered the bug on.
 
 If you're going to play on emulator, you should use the latest development version of Dolphin which can be found at the top of this page: https://dolphin-emu.org/download/  
-Note that the GameCube boot up animation in Dolphin doesn't work with the randomizer and will cause the game to crash before reaching the main menu. If you have previously set Dolphin up to play that animation you will need to disable it before launching the randomized game by going to Config -> GameCube in Dolphin and checking "Skip Main Menu".  
+Note that the GameCube boot up animation in Dolphin doesn't work with the randomizer and will cause the game to crash before reaching the main menu. If you have previously set Dolphin up to play that animation you will need to disable it before launching the randomized game by going to Config -> GameCube in Dolphin and checking "Skip Main Menu". 
+
+An updated package for Emotracker can be found here (https://github.com/DualVission/Wind-Waker-Item-and-Map-Tracker). This package can be seen as the 'beta' version of the main package, and is usually more up to date.
 
 ### Discord Server
 
